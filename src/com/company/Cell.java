@@ -1,6 +1,6 @@
 package com.company;
 
-public class Cell {
+public abstract class Cell {
     public int[] pos;
     public static Cell[][] reference;
     public int state;//////////////////////////////
