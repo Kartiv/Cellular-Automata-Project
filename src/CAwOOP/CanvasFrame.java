@@ -1,4 +1,4 @@
-package com.company;
+package CAwOOP;
 
 import javax.swing.*;
 
@@ -14,7 +14,7 @@ class CanvasFrame extends JFrame {
     CanvasFrame(int size, Universe uni, int time, int delay) {
         CanvasPanel panel = new CanvasPanel(size, uni, time, delay);
 
-        this.setTitle(String.format("Cellular Automata with size %d and %d states", uni.size, 10)); ///////10 here is same fix as in canvaspanel
+        this.setTitle(String.format("Cellular Automata with size %d and %d states", uni.size, uni.states));
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(size, size);
