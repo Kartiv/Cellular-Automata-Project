@@ -12,13 +12,19 @@ public abstract class Cell {
         this.state = state;
     }
 
+    /**
+     * Sets reference of cells, i.e the current state of the universe
+     *
+     * @param newReference
+     */
     public void setReference(Cell[][] newReference) {
         reference = newReference;
         universeSize = newReference.length;
     }
 
     /**
-     * Moore-Neighborhood search with radius 1.
+     * Function to find positions of neighbors.
+     * Default is Moore-Neighborhood search with radius 1.
      *
      * @return array of the neighbors' positions.
      */
@@ -41,6 +47,11 @@ public abstract class Cell {
         return neighbors;
     }
 
+    /**
+     * Default rule
+     * @param neighbors array of neighbor positions,
+     * @return
+     */
     public Cell nextState(Cell[] neighbors) {
         return this;
     }
