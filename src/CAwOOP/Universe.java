@@ -106,6 +106,12 @@ public class Universe {
         setState(nextState);
     }
 
+    /**
+     * Create a GUI displaying the progression of the Universe.
+     *
+     * @param time  the starting time from which to animate.
+     * @param delay the delay (in milliseconds). Setting the delay to 0 will display a still state.
+     */
     public void animate(int time, int delay) { //animates universe
         new CanvasFrame(size * 10, this, time, delay);
     }
