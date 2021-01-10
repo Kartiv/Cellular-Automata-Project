@@ -23,11 +23,13 @@ public class Universe {
     }
 
     /**
-     * Turns a cell array to int array of cell states.
-     * @param cellGrid
-     * @return
+     * Turns a 2d Cell array to a 2d int array of states.
+     *
+     * @param cellGrid the 2d Cell array to translate.
+     * @return int representation of cellGrid.
      */
     public int[][] toArray(Cell[][] cellGrid) {
+        int size = cellGrid.length;
         int[][] cellStates = new int[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -40,8 +42,9 @@ public class Universe {
 
     /**
      * Turns universe state at a specific time to array of int cell states
+     *
      * @param time time of universe state
-     * @return
+     * @return int representation of time.
      */
     public int[][] toArray(int time) {
         if (time >= currentStep) {
@@ -61,6 +64,7 @@ public class Universe {
 
     /**
      * turns overTime to int array over time of cell states
+     *
      * @return cell states over time
      */
     public int[][][] deepToArray() {
@@ -78,6 +82,7 @@ public class Universe {
 
     /**
      * set new state for the universe
+     *
      * @param state new state
      */
     public void setState(Cell[][] state) {
@@ -89,7 +94,7 @@ public class Universe {
     }
 
     /**
-     *advances universe, i.e next time step
+     * advances universe, i.e next time step
      */
     public void advance() {
         Cell[][] nextState = new Cell[size][size];
