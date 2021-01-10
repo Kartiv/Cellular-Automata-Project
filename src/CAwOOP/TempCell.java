@@ -7,6 +7,11 @@ public class TempCell extends Cell {
     }
 
     @Override
+    public Cell[] getNeighbors() {
+        return super.getNeighbors();
+    }
+
+    @Override
     public Cell nextState(Cell[] neighbors) {
         return new TempCell(pos, (neighbors[0].state + 1) % 3);
     }

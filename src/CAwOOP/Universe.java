@@ -1,7 +1,10 @@
 package CAwOOP;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class Universe {
-    public final int size; //size of universe (4 if 4x4)
+    public final int size; // size of universe (4 if 4x4)
     public final boolean borders;
     public final int timeSteps;
     public final int states;
@@ -20,6 +23,31 @@ public class Universe {
 
         overTime[0] = startState;
         setState(startState);
+    }
+
+    public static void main(String[] args) {
+        int size = 5;
+        int states = 3;
+        int timeSteps = 10;
+
+        // Generate initial starting state
+        Cell[][] universe = new Cell[size][size];
+        Random rand = new Random();
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                universe[i][j] = new TempCell(new int[]{i, j}, rand.nextInt(states));
+            }
+        }
+
+        // BE GOD (haha get it? yaani create the universe...)
+        Universe uni = new Universe(timeSteps + 1, universe, states);
+        for (int i = 0; i < timeSteps; i++) {
+            uni.advance();
+        }
+
+        // Animate
+        uni.animate(0, 500);
     }
 
     /**
@@ -103,6 +131,15 @@ public class Universe {
                 nextState[i][j] = currentState[i][j].nextState(currentState[i][j].getNeighbors());
             }
         }
+
+        System.out.println(
+                Arrays.deepToString(toArray(nextState))
+                        .replace("[[", " [")
+                        .replace("]]", "\n")
+                        .replace(" [", "")
+                        .replace("]", "\n")
+                        .replace(",", "")
+        );
         setState(nextState);
     }
 
