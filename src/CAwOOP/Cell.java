@@ -47,12 +47,8 @@ public abstract class Cell {
         return neighbors;
     }
 
-    /**
-     * Default rule
-     * @param neighbors array of neighbor positions,
-     * @return
-     */
-    public Cell nextState(Cell[] neighbors) {
+
+    public Cell nextState() {
         return this;
     }
 }

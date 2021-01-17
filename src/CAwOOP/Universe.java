@@ -2,10 +2,8 @@ package CAwOOP;
 
 public class Universe {
     public final int size; //size of universe (4 if 4x4)
-    public final boolean borders;
-    public final int timeSteps;
+    public final int timeSteps; //time universe will run for
     public final int states;
-
     public final Cell[][][] overTime;
     private Cell[][] currentState;
     private int currentStep = 0;
@@ -15,7 +13,6 @@ public class Universe {
         this.timeSteps = timeSteps;
         this.states = states;
         this.size = startState.length;
-        this.borders = true;
         this.overTime = new Cell[timeSteps][size][size];
 
         overTime[0] = startState;
@@ -92,13 +89,15 @@ public class Universe {
      *advances universe, i.e next time step
      */
     public void advance() {
-        Cell[][] nextState = new Cell[size][size];
+
+        Cell[][] nextState = new Cell[size][size]; //create the next state
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                nextState[i][j] = currentState[i][j].nextState(currentState[i][j].getNeighbors());
+                nextState[i][j] = currentState[i][j].nextState();
             }
         }
-        setState(nextState);
+
+        setState(nextState); //sets the next state as the current one
     }
 
     public void animate(int time, int delay) { //animates universe
