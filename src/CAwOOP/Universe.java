@@ -1,9 +1,14 @@
 package CAwOOP;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class Universe {
-    public final int size; //size of universe (4 if 4x4)
-    public final int timeSteps; //time universe will run for
+    public final int size; // size of universe (4 if 4x4)
+    public final boolean borders;
+    public final int timeSteps;
     public final int states;
+
     public final Cell[][][] overTime;
     private Cell[][] currentState;
     private int currentStep = 0;
@@ -13,18 +18,46 @@ public class Universe {
         this.timeSteps = timeSteps;
         this.states = states;
         this.size = startState.length;
+        this.borders = true;
         this.overTime = new Cell[timeSteps][size][size];
 
         overTime[0] = startState;
         setState(startState);
     }
 
+    public static void main(String[] args) {
+        int size = 5;
+        int states = 3;
+        int timeSteps = 10;
+
+        // Generate initial starting state
+        Cell[][] universe = new Cell[size][size];
+        Random rand = new Random();
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                universe[i][j] = new TempCell(new int[]{i, j}, rand.nextInt(states));
+            }
+        }
+
+        // BE GOD (haha get it? yaani create the universe...)
+        Universe uni = new Universe(timeSteps + 1, universe, states);
+        for (int i = 0; i < timeSteps; i++) {
+            uni.advance();
+        }
+
+        // Animate
+        uni.animate(0, 500);
+    }
+
     /**
-     * Turns a cell array to int array of cell states.
-     * @param cellGrid
-     * @return
+     * Turns a 2d Cell array to a 2d int array of states.
+     *
+     * @param cellGrid the 2d Cell array to translate.
+     * @return int representation of cellGrid.
      */
     public int[][] toArray(Cell[][] cellGrid) {
+        int size = cellGrid.length;
         int[][] cellStates = new int[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -37,8 +70,9 @@ public class Universe {
 
     /**
      * Turns universe state at a specific time to array of int cell states
+     *
      * @param time time of universe state
-     * @return
+     * @return int representation of time.
      */
     public int[][] toArray(int time) {
         if (time >= currentStep) {
@@ -58,6 +92,7 @@ public class Universe {
 
     /**
      * turns overTime to int array over time of cell states
+     *
      * @return cell states over time
      */
     public int[][][] deepToArray() {
@@ -75,6 +110,7 @@ public class Universe {
 
     /**
      * set new state for the universe
+     *
      * @param state new state
      */
     public void setState(Cell[][] state) {
@@ -86,20 +122,33 @@ public class Universe {
     }
 
     /**
-     *advances universe, i.e next time step
+     * advances universe, i.e next time step
      */
     public void advance() {
-
-        Cell[][] nextState = new Cell[size][size]; //create the next state
+        Cell[][] nextState = new Cell[size][size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                nextState[i][j] = currentState[i][j].nextState();
+                nextState[i][j] = currentState[i][j].nextState(currentState[i][j].getNeighbors());
             }
         }
 
-        setState(nextState); //sets the next state as the current one
+        System.out.println(
+                Arrays.deepToString(toArray(nextState))
+                        .replace("[[", " [")
+                        .replace("]]", "\n")
+                        .replace(" [", "")
+                        .replace("]", "\n")
+                        .replace(",", "")
+        );
+        setState(nextState);
     }
 
+    /**
+     * Create a GUI displaying the progression of the Universe.
+     *
+     * @param time  the starting time from which to animate.
+     * @param delay the delay (in milliseconds). Setting the delay to 0 will display a still state.
+     */
     public void animate(int time, int delay) { //animates universe
         new CanvasFrame(size * 10, this, time, delay);
     }

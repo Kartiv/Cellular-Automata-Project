@@ -15,7 +15,7 @@ public abstract class Cell {
     /**
      * Sets reference of cells, i.e the current state of the universe
      *
-     * @param newReference
+     * @param newReference 2d Cell grid which is the reference.
      */
     public void setReference(Cell[][] newReference) {
         reference = newReference;
@@ -47,8 +47,13 @@ public abstract class Cell {
         return neighbors;
     }
 
-
-    public Cell nextState() {
+    /**
+     * Default rule
+     *
+     * @param neighbors array of neighbor positions,
+     * @return the next state of the Cell.
+     */
+    public Cell nextState(Cell[] neighbors) {
         return this;
     }
 }

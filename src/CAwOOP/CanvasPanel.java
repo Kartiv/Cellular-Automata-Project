@@ -87,6 +87,7 @@ class CanvasPanel extends JPanel implements ActionListener {
         int us = uni.size;
         int w = size / us;
 
+        // Paint the Cells on the canvas
         for (int i = 0; i < us; i++) {
             for (int j = 0; j < us; j++) {
                 c = colors[uni.overTime[time][j][i].state];
@@ -94,12 +95,15 @@ class CanvasPanel extends JPanel implements ActionListener {
                 g2d.fillRect(i * w, j * w + 30, w, w);
             }
         }
+
+        // Cover with gridlines
         g2d.setColor(Color.BLACK);
         for (int i = 0; i < us; i++) {
             g2d.drawLine(i * w, 30, i * w, size + 30);
             g2d.drawLine(0, i * w + 30, size, i * w + 30);
         }
 
+        // Title text - current time.
         g2d.setColor(Color.WHITE);
         g2d.drawLine(0, 30, size, 30);
         timeText.setText(String.format("Universe at time %d", time));
