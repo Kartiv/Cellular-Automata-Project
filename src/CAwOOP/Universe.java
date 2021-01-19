@@ -8,7 +8,7 @@ public class Universe {
     public final int timeSteps;
     public final int states;
 
-    public final Cell[][][] overTime; //all of the states of the universe
+    public final Cell[][][] overTime; // all of the states of the universe
     private Cell[][] currentState;
     private int currentStep = 0;
 
