@@ -3,7 +3,7 @@ import java.util.Random;
 public class Empty extends Cell{
 
     public int intentState =0;
-    private static float preyChance = 0.25f;
+    private static float preyChance = 0.4f;
     private static float predatorChance = 0.2f;
 
     public Empty(int[] pos){
