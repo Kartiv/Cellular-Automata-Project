@@ -2,15 +2,15 @@ package CAwOOP;
 
 import java.util.Arrays;
 
-public class Prey extends Cell {
+public class Predator extends Cell{
 
-    public int moveIntent = 0; // for empty cells to use
-    public boolean dead = false;
-    public Prey(int[] pos) {
-        super(pos, 1);
+    public int moveIntent = 0;
+
+    public Predator(int[] pos) {
+        super(pos, 2);
     }
 
-    private float[] predatorSearch() {
+    private float[] preySearch() {
 
         int north = 0;
         int south = 0;
@@ -21,25 +21,25 @@ public class Prey extends Cell {
             for (int j = -i; j < i + 1; j++) {
 
                 if(pos[0] + j>=0 && pos[0] + j<universeSize && pos[1] + i<universeSize) {
-                    if (reference[pos[1] + i][pos[0] + j].state == 2) {
+                    if (reference[pos[1] + i][pos[0] + j].state == 1) {
                         north += 1;
                     }
                 }
 
                 if(pos[1] + j>=0 && pos[1] + j<universeSize && pos[0] + i<universeSize) {
-                    if (reference[pos[1] + j][pos[0] + i].state == 2) {
+                    if (reference[pos[1] + j][pos[0] + i].state == 1) {
                         east += 1;
                     }
                 }
 
                 if(pos[0] + j>=0 && pos[1] - i>=0 && pos[1] - i<universeSize && pos[0] + j<universeSize) {
-                    if (reference[pos[1] - i][pos[0] + j].state == 2) {
+                    if (reference[pos[1] - i][pos[0] + j].state == 1) {
                         south += 1;
                     }
                 }
 
                 if(pos[0] - j>=0 && pos[1] + i<universeSize && pos[0] - j<universeSize) {
-                    if (reference[pos[1] + i][pos[0] - j].state == 2) {
+                    if (reference[pos[1] + i][pos[0] - j].state == 1) {
                         west += 1;
                     }
                 }
@@ -53,7 +53,6 @@ public class Prey extends Cell {
         Arrays.sort(list);
         return (list);
     }
-
 
     @Override
     public Cell[] getNeighbors() {
@@ -71,23 +70,24 @@ public class Prey extends Cell {
 
     @Override
     public Cell nextState() {
-
-        if(dead){
-            return new Predator(this.pos);
-        }
+        //this part is for killing prey if it is nearby
         Cell[] neighbors = getNeighbors();
-        float[] intentArray = predatorSearch();
-
-        for(int i=3; i>=0; i--){
+        for(int i=0; i<4;i++){
+            if(neighbors[i] instanceof Prey){
+                ((Prey) neighbors[i]).dead = true;
+                return new Empty(this.pos);
+            }
+        }
+        //this part is for movement if not eating
+        float[] intentArray = preySearch();
+        for(int i=0; i<4; i++){
             Cell temp = neighbors[(int) (10*(intentArray[i]-Math.floor(intentArray[i])))];
             if(temp instanceof Empty){
                 if(temp.pos[0] ==0 || temp.pos[1]==0 || temp.pos[0]==universeSize-1 || temp.pos[1]==universeSize-1){
                     return this;
                 }
                 else {
-                    if(((Empty) temp).intentState<1){
-                        ((Empty) temp).intentState = 1;
-                    }
+                    ((Empty) temp).intentState = 2;
                     return new Empty(this.pos);
                 }
             }
