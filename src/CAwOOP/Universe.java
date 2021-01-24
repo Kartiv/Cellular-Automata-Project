@@ -128,4 +128,8 @@ public class Universe {
     public void animate(int time, int delay) { //animates universe
         new CanvasFrame(size * 10, this, time, delay);
     }
+
+    public void animate(int time, int delay, int[][] colors) { //animates universe
+        new CanvasFrame(size * 10, this, time, delay, colors);
+    }
 }

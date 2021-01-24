@@ -15,19 +15,16 @@ public class Main {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if(i==0 || j==0 || i==size-1 || j==size-1){
+                if (i == 0 || j == 0 || i == size - 1 || j == size - 1) {
                     universe[i][j] = new Empty(new int[]{i, j});
-                }
-                else{
+                } else {
                     float s = rand.nextFloat();
-                    if(s<0.3){
-                        universe[i][j] = new Prey(new int[]{i,j});
-                    }
-                    else if (s<0.5){
-                        universe[i][j] = new Predator(new int[]{i,j});
-                    }
-                    else{
-                        universe[i][j] = new Empty(new int[]{i,j});
+                    if (s < 0.3) {
+                        universe[i][j] = new Prey(new int[]{i, j});
+                    } else if (s < 0.5) {
+                        universe[i][j] = new Predator(new int[]{i, j});
+                    } else {
+                        universe[i][j] = new Empty(new int[]{i, j});
                     }
                 }
             }
@@ -40,7 +37,11 @@ public class Main {
         }
 
         // Animate
-        uni.animate(0, 500);
+        int[][] colors = new int[][]{
+            {0, 0, 0},
+            {0, 255, 0},
+            {255, 0, 0}
+        };
+        uni.animate(0, 2000, colors);
     }
-
 }
