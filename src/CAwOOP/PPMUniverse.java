@@ -14,25 +14,16 @@ public class PPMUniverse extends Universe {
         Cell[][] nextState = new Cell[size][size]; //creates the next state
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (currentState[i][j] instanceof Predator){
+                if (currentState[i][j] instanceof Predator) {
+                    nextState[i][j] = currentState[i][j].nextState();
+                } else if (currentState[i][j] instanceof Prey) {
+                    nextState[i][j] = currentState[i][j].nextState();
+                } else if (currentState[i][j] instanceof Empty) {
                     nextState[i][j] = currentState[i][j].nextState();
                 }
             }
         }
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (currentState[i][j] instanceof Prey){
-                    nextState[i][j] = currentState[i][j].nextState();
-                }
-            }
-        }
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (currentState[i][j] instanceof Empty){
-                    nextState[i][j] = currentState[i][j].nextState();
-                }
-            }
-        }
+
         System.out.println(
                 Arrays.deepToString(toArray(nextState))
                         .replace("[[", " [")
@@ -43,5 +34,5 @@ public class PPMUniverse extends Universe {
         );
 
         setState(nextState); //advances to the next state
-}
+    }
 }
